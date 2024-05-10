@@ -1,14 +1,15 @@
-const { newUser } = require('./generate');
+const { generateUser } = require('../support/generateUser');
 
 describe('login Test', () => {
   it('logs in the registered user', () => {
+    const { username, password } = generateUser();
+    cy.log('Logging in with:', username, password);
       cy.visit('https://demoblaze.com');
-      cy.registration().then(newProfile => {
-        console.log('Logging in with:', newProfile.newUsername, newProfile.newPassword);
+      cy.registration(username, password);
           cy.get('#login2').click();
-          cy.get('#loginusername').type(newProfile.newUsername);
-          cy.get('#loginpassword').type(newProfile.newPassword);
+          cy.wait(5000);
+          cy.get('#loginusername').type(username);
+          cy.get('#loginpassword').type(password);
           cy.contains('button', 'Log in').click();
       });
   });
-});

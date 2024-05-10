@@ -23,14 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-const { newUser } = require('../e2e/generate');
 
-Cypress.Commands.add('registration', () =>{
-    const newProfile = newUser();
+Cypress.Commands.add('registration', (username, password) =>{
     cy.request('POST', 'https://api.demoblaze.com/signup',{
-      "username": newProfile.newUsername,
-      "password": newProfile.newPassword,
+      "username": username,
+      "password": password,
     });
-    return cy.wrap(newProfile);
   });
 
